@@ -1,11 +1,14 @@
 const User = require('../model/UserModel')
 
 class CreatNewUser {
-  static async createUser (email, hashPass) {
+  static async createUser (name, email, hashPass, cpf, age) {
     try {
       const response = await User.create({
+        name,
         email,
-        password: hashPass
+        password: hashPass,
+        cpf,
+        age
       })
       return response
     } catch (error) {

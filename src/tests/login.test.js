@@ -12,8 +12,11 @@ const User = require('../model/UserModel')
 
 const mockUser = {
   id: 1,
+  name: 'any name',
   email: 'any_email@gmail.com',
-  password: 'asdqweAA_11'
+  password: 'asdqweAA_11',
+  cpf: '405.661.313-31',
+  age: 11
 }
 
 const emailInvalid = {
@@ -43,7 +46,7 @@ describe('Suite tests for ensure correct login', function () {
 
   this.beforeAll(async function () {
     var passwordHash = await PassHash.generatorHash(mockUser.password)
-    await CreatNewUser.createUser(mockUser.email, passwordHash)
+    await CreatNewUser.createUser(mockUser.name, mockUser.email, passwordHash, mockUser.cpf, mockUser.age)
   })
 
   it('Ensure return a token basead in email and id of user', () => {
