@@ -35,7 +35,8 @@ const User = driver.define('user', {
 })
 
 User.hasMany(Call, {
-  foreignKey: 'userId'
+  foreignKey: 'userId',
+  onDelete: 'CASCADE'
 })
 
 module.exports = User
