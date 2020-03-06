@@ -1,5 +1,6 @@
 const driver = require('../config/db/index')
 const Sequelize = require('sequelize')
+const Call = require('./CallModel')
 
 const User = driver.define('user', {
   name: {
@@ -31,6 +32,10 @@ const User = driver.define('user', {
     type: Sequelize.INTEGER,
     allowNull: false
   }
+})
+
+User.hasMany(Call, {
+  foreignKey: 'userId'
 })
 
 module.exports = User
