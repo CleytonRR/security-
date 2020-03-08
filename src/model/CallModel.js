@@ -1,6 +1,5 @@
 const driver = require('../config/db/index')
 const Sequelize = require('sequelize')
-const User = require('./UserModel')
 
 const Call = driver.define('call', {
   title: {
@@ -25,12 +24,10 @@ const Call = driver.define('call', {
 
   created: {
     type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW
+    defaultValue: new Date().toLocaleString()
   }
 }, {
   timestamps: false
 })
-
-Call.belongsTo(User)
 
 module.exports = Call
