@@ -7,6 +7,7 @@ const CreateNewUser = require('../Crud/user/create')
 const User = require('../model/UserModel')
 const Call = require('../model/CallModel')
 const CreateNewCall = require('../Crud/call/create')
+const AtualDate = require('../util/corretDate')
 
 const mockUser = {
   name: 'any name',
@@ -50,12 +51,8 @@ describe.only('Suite tests for ensure correct Calls', function () {
   })
 
   it('ensure correct create', async () => {
-    const hora = new Date()
-    hora.setDate(new Date().getDate())
-    hora.setMonth(new Date().getMonth())
-    hora.setFullYear(new Date().getFullYear())
-    hora.setUTCHours(new Date().getHours())
-    const response = await CreateNewCall.createCall(mockCall.title, mockCall.description, mockCall.latitude, mockCall.longitude, hora, datas)
+    const date = AtualDate.dateNow()
+    const response = await CreateNewCall.createCall(mockCall.title, mockCall.description, mockCall.latitude, mockCall.longitude, date, datas)
     assert.deepStrictEqual(mockCall.title, response.title)
   })
 })
