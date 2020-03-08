@@ -31,6 +31,11 @@ const User = driver.define('user', {
   age: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+
+  master: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
