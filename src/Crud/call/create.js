@@ -1,12 +1,13 @@
 const Call = require('../../model/CallModel')
 
 class CreateNewCall {
-  static async createCall (title, description, latitude, longitude, date, userId) {
+  static async createCall (title, description, status = true, latitude, longitude, date, userId) {
     try {
       const point = { type: 'Point', coordinates: [latitude, longitude] }
       const response = await Call.create({
         title,
         description,
+        status,
         local: point,
         created: date,
         userId
