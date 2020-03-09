@@ -10,7 +10,7 @@ const routes = Router()
 routes.post('/user', UserController.create)
 routes.post('/login', LoginController.authenticar)
 routes.get('/private', testLogin, Authorization.private)
-routes.post('/newcall', CallController.create)
-routes.get('/calls', CallController.listCalls)
+routes.post('/newcall', testLogin, CallController.create)
+routes.get('/calls', testLogin, CallController.listCalls)
 
 module.exports = routes
