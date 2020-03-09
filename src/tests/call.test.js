@@ -91,4 +91,9 @@ describe.only('Suite tests for ensure correct Calls', function () {
     const response = await request(app).post('/newcall').send(mockCall).set({ authorization: 'beer ' + tokenUser, Accept: 'application/json' })
     assert.deepStrictEqual('Created success', response.body.message)
   })
+
+  it('Ensure correct return of list calls basead in user id', async () => {
+    const response = await request(app).get('/calls').set({ authorization: 'beer ' + tokenUser, Accept: 'application/json' })
+    assert.deepStrictEqual(3, response.body.length)
+  })
 })
