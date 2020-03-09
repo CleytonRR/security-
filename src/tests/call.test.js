@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 require('dotenv').config()
 const assert = require('assert')
+const request = require('supertest')
 const app = require('../index')
 const PassHash = require('../util/passwordHash')
 const CreateNewUser = require('../Crud/user/create')
@@ -9,7 +10,7 @@ const Call = require('../model/CallModel')
 const CreateNewCall = require('../Crud/call/create')
 const showCalls = require('../Crud/call/show')
 const AtualDate = require('../util/corretDate')
-const Verify = require('../util/verifyMaster')
+const GeneratorToken = require('../util/generatorToken')
 
 const mockUser = {
   name: 'any name',
@@ -40,6 +41,7 @@ const mockCall = {
 
 var idUser = ''
 var idUserMaster = ''
+var tokenUser = ''
 
 describe.only('Suite tests for ensure correct Calls', function () {
   this.beforeAll(async function () {
@@ -57,6 +59,7 @@ describe.only('Suite tests for ensure correct Calls', function () {
     const response = await CreateNewUser.createUser(mockUser.name, mockUser.email, passwordHash, mockUser.cpf, mockUser.age, mockUser.master)
     idUserMaster = responseMaster.id
     idUser = response.id
+    tokenUser = GeneratorToken.token(idUser, mockUser.email)
   })
 
   this.afterAll(async function () {
@@ -82,5 +85,10 @@ describe.only('Suite tests for ensure correct Calls', function () {
   it('Ensure correct list of calls with status true for user master', async () => {
     const response = await showCalls.checkCalls(idUserMaster)
     assert.strictEqual(2, response.length)
+  })
+
+  it('Ensure correct created in route', async () => {
+    const response = await request(app).post('/newcall').send(mockCall).set({ authorization: 'beer ' + tokenUser, Accept: 'application/json' })
+    assert.deepStrictEqual('Created success', response.body.message)
   })
 })
