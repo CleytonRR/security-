@@ -4,7 +4,7 @@ const Verify = require('../../util/verifyMaster')
 class showCalls {
   static async checkCalls (id) {
     try {
-      if (Verify.verifyMaster(id)) {
+      if (await Verify.verifyMaster(id)) {
         const response = await Call.findAll({
           where: {
             status: true

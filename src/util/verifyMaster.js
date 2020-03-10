@@ -8,7 +8,7 @@ class Verify {
           id
         }
       })
-      if (response.master) {
+      if (response.master === true) {
         return true
       }
 

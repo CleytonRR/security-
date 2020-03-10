@@ -43,7 +43,7 @@ var idUser = ''
 var idUserMaster = ''
 var tokenUser = ''
 
-describe.only('Suite tests for ensure correct Calls', function () {
+describe('Suite tests for ensure correct Calls', function () {
   this.beforeAll(async function () {
     await User.sync({ force: true })
   })
