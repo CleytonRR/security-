@@ -105,4 +105,9 @@ describe.only('Suite tests for ensure correct Calls', function () {
     assert.deepStrictEqual(200, response.status)
     assert.deepStrictEqual(1, response.body[0])
   })
+
+  it('Teste middlware testMaster -> return 401 if user is not master', async () => {
+    const response = await request(app).put('/changecall').send({ id: idCall }).set({ authorization: 'beer ' + tokenUser, Accept: 'application/json' })
+    assert.deepStrictEqual(401, response.status)
+  })
 })
