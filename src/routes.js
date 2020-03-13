@@ -12,5 +12,6 @@ routes.post('/login', LoginController.authenticar)
 routes.get('/private', testLogin, Authorization.private)
 routes.post('/newcall', testLogin, CallController.create)
 routes.get('/calls', testLogin, CallController.listCalls)
+routes.put('/changecall', testLogin, CallController.updateCall)
 
 module.exports = routes

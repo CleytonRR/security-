@@ -36,14 +36,15 @@ const mockCall = {
   status: true,
   latitude: -3.4628048,
   longitude: -41.5550305
-
 }
 
 var idUser = ''
 var idUserMaster = ''
 var tokenUser = ''
+var tokenUserMaster = ''
+var idCall = ''
 
-describe('Suite tests for ensure correct Calls', function () {
+describe.only('Suite tests for ensure correct Calls', function () {
   this.beforeAll(async function () {
     await User.sync({ force: true })
   })
@@ -55,11 +56,12 @@ describe('Suite tests for ensure correct Calls', function () {
   this.beforeAll(async function () {
     var passwordHash = await PassHash.generatorHash(mockUser.password)
     var passHashMaster = await PassHash.generatorHash(mockUserMaster.password)
-    const responseMaster = await CreateNewUser.createUser(mockUserMaster.name, mockUserMaster.email, passHashMaster, mockUserMaster.cpf, mockUserMaster.age, mockUserMaster.age, mockUserMaster.master)
+    const responseMaster = await CreateNewUser.createUser(mockUserMaster.name, mockUserMaster.email, passHashMaster, mockUserMaster.cpf, mockUserMaster.age, mockUserMaster.master)
     const response = await CreateNewUser.createUser(mockUser.name, mockUser.email, passwordHash, mockUser.cpf, mockUser.age, mockUser.master)
     idUserMaster = responseMaster.id
     idUser = response.id
     tokenUser = GeneratorToken.token(idUser, mockUser.email)
+    tokenUserMaster = GeneratorToken.token(idUserMaster, mockUserMaster.email)
   })
 
   this.afterAll(async function () {
@@ -74,6 +76,7 @@ describe('Suite tests for ensure correct Calls', function () {
     const date = AtualDate.dateNow()
     const response = await CreateNewCall.createCall(mockCall.title, mockCall.description, mockCall.status, mockCall.latitude, mockCall.longitude, date, idUser)
     await CreateNewCall.createCall('Teste for this', mockCall.description, mockCall.status, mockCall.latitude, mockCall.longitude, date, idUser)
+    idCall = response.id
     assert.deepStrictEqual(mockCall.title, response.title)
   })
 
@@ -82,7 +85,7 @@ describe('Suite tests for ensure correct Calls', function () {
     assert.strictEqual(2, response.length)
   })
 
-  it('Ensure correct list of calls with status true for user master', async () => {
+  it('Ensure correct list of calls with all status true for user master', async () => {
     const response = await showCalls.checkCalls(idUserMaster)
     assert.strictEqual(2, response.length)
   })
@@ -95,5 +98,11 @@ describe('Suite tests for ensure correct Calls', function () {
   it('Ensure correct return of list calls basead in user id', async () => {
     const response = await request(app).get('/calls').set({ authorization: 'beer ' + tokenUser, Accept: 'application/json' })
     assert.deepStrictEqual(3, response.body.length)
+  })
+
+  it('Ensure correct update status for true', async () => {
+    const response = await request(app).put('/changecall').send({ id: idCall }).set({ authorization: 'beer ' + tokenUserMaster, Accept: 'application/json' })
+    assert.deepStrictEqual(200, response.status)
+    assert.deepStrictEqual(1, response.body[0])
   })
 })

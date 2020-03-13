@@ -1,5 +1,6 @@
 const CreateNewCall = require('../Crud/call/create')
 const showCalls = require('../Crud/call/show')
+const updateCalls = require('../Crud/call/update')
 const AtualDate = require('../util/corretDate')
 const TokenData = require('../util/tokenDatas')
 
@@ -31,6 +32,15 @@ module.exports = {
       return res.status(200).json(response)
     } catch (error) {
       res.status(500).json({ message: 'Erro to find calls' })
+    }
+  },
+
+  async updateCall (req, res) {
+    try {
+      const response = await updateCalls.updateCalls(req.body.id)
+      return res.status(200).json(response)
+    } catch (error) {
+      res.status(500).json({ message: 'Update error' })
     }
   }
 }
