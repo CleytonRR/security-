@@ -1,9 +1,9 @@
 {
-  "name": "LoginApi",
+  "name": "security",
   "version": "1.0.0",
-  "description": "\"Api for login users'",
+  "description": "\"API for backend security plus app'",
   "main": "index.js",
-  "repository": "git@github.com:CleytonRR/LoginApi.git",
+  "repository": "git@github.com:CleytonRR/security-.git",
   "author": "cleytonRR <cleytonrodrigues69@live.com>",
   "license": "MIT",
   "scripts": {
