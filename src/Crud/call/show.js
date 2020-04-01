@@ -15,7 +15,6 @@ class showCalls {
       const response = await Call.findAll({
         where: {
           userId: id,
-          status: true
         }
       })
       return response

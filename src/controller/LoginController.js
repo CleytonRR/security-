@@ -23,7 +23,7 @@ module.exports = {
       }
       const dados = await showUser.checkUserExists(req.body.email)
       const token = GeneratorToken.token(dados[1].id, dados[1].email)
-      return res.status(200).json({ token })
+      return res.status(200).json({ token, master: dados[1].master })
     } catch (error) {
       return res.status(500).json({ message: 'Internal error' })
     }
