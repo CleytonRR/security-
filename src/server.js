@@ -1,4 +1,4 @@
 require('dotenv').config()
-const app = require('./index')
+const server = require('./index')
 
-app.listen(process.env.PORT || 3333)
+server.listen(process.env.PORT || 3333)
